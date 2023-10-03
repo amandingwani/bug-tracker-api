@@ -10,6 +10,12 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Hello, TypeScript Express!');
 });
 
+app.get('/test', (req, res) => {
+    res.json({
+		test: 'ok'
+	});
+});
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
