@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
+import healthRoutes from './routes/health';
 
 dotenv.config();
 
@@ -10,11 +11,7 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Hello, TypeScript Express!');
 });
 
-app.get('/test', (req, res) => {
-    res.json({
-		test: 'ok'
-	});
-});
+app.use('/health', healthRoutes);
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
