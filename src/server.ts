@@ -1,9 +1,6 @@
-import dotenv from 'dotenv';
 import app from "./app";
+import { PORT } from "./utils/config";
 
-dotenv.config();
-const port = process.env.PORT;
-
-app.listen(port, () => {
-    console.log(`${process.env.npm_package_name}\nServer running at http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`${process.env.npm_package_name}\nServer running at http://localhost:${PORT}`);
 });
