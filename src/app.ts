@@ -4,7 +4,6 @@ import healthRoutes from './routes/health';
 import authRoutes from './routes/auth';
 import middleware from './middleware';
 
-
 const app = express();
 
 app.use(cors({
@@ -12,6 +11,8 @@ app.use(cors({
     origin: process.env.CLIENT_URL
 }));
 app.use(express.json());
+
+app.use(middleware.logging);
 
 app.use('/health', healthRoutes);
 app.use('/auth', authRoutes);

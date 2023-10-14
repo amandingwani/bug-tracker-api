@@ -1,3 +1,4 @@
+import logging from "./logging";
 import notFoundHandler from "./notFoundHandler";
 
-export default { notFoundHandler };
+export default { logging, notFoundHandler };
