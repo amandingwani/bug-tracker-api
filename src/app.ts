@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-import { CLIENT_URL } from './utils/config'
+import { CLIENT_URL } from './config/env'
 import healthRoutes from './routes/health';
 import authRoutes from './routes/auth';
 import middleware from './middleware';

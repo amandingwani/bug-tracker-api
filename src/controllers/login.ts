@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import {OAuth2Client} from 'google-auth-library';
+import { OAuth2Client } from 'google-auth-library';
 
 const client = new OAuth2Client();
 
@@ -15,13 +15,19 @@ async function verify(token: string) {
 	const userid = payload?.sub;
 	// If request specified a G Suite domain:
 	// const domain = payload['hd'];
-  }
+}
 
 export const login = async (req: Request, res: Response) => {
-	await verify(req.body.token).catch(console.error);
-	
-	
-	res.json({
-		test: 'ok'
+	await verify(req.body.token)
+		.then(() => {
+			res.json({
+				login: 'ok'
+			});
+		})	
+	.catch ((err) => {
+		res.json({
+			login: 'fail'
+		})
+		console.log(err);
 	});
 };
