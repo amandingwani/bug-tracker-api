@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { CLIENT_URL } from './config/env'
 import healthRoutes from './routes/health';
@@ -7,6 +8,7 @@ import middleware from './middleware';
 
 const app = express();
 
+app.use(cookieParser());
 app.use(cors({
     credentials: true,
     origin: CLIENT_URL
