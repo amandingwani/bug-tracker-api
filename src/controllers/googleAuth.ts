@@ -5,7 +5,7 @@ import { getTokens, verifyIdToken } from '../services/google'
 import { JWT_SECRET } from '../config/env';
 
 // login or register
-export const login = async (req: Request, res: Response) => {
+export const googleAuth = async (req: Request, res: Response) => {
 	try {
 		const tokens = await getTokens(req.body.code);
 		if (tokens.id_token) {
@@ -13,7 +13,7 @@ export const login = async (req: Request, res: Response) => {
 			if (payload) {
 				if (payload.email && payload.given_name) {
 
-					console.log(payload);
+					// console.log(payload);
 					// if user already exits, just login, else register first then login
 					let user = await prisma.user.findUnique({
 						where: {
@@ -23,7 +23,8 @@ export const login = async (req: Request, res: Response) => {
 
 					// login
 					if (user) {
-						console.log(user);
+						// console.log({user});
+
 						jwt.sign(user, JWT_SECRET, {}, (err, token) => {
 							if (err) throw err;
 							res.cookie('token', token, { sameSite: 'none', secure: true }).status(200).json({
