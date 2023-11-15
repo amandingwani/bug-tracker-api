@@ -43,7 +43,7 @@ export const googleAuth = async (req: Request, res: Response) => {
 								picture: payload.picture
 							}
 						});
-						console.log(user);
+						console.log({ user });
 						jwt.sign(user, JWT_SECRET, {}, (err, token) => {
 							if (err) throw err;
 							res.cookie('token', token, { sameSite: 'none', secure: true }).status(201).json({
