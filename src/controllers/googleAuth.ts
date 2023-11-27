@@ -53,14 +53,7 @@ export const googleAuth = async (req: Request, res: Response) => {
 		}
 	}
 	catch (error) {
-		res.json({
-			id: null,
-			google_id_sub: null,
-			email: null,
-			firstName: null,
-			lastName: null,
-			picture: null,
-		})
+		res.json({})
 		console.log(error);
 	}
 };
