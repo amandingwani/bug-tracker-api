@@ -9,3 +9,7 @@
 - refactor: Code refactoring without adding new features or fixing bugs.
 - test: Addition or modification of test cases.
 - chore: Other changes not directly affecting the code (e.g., build scripts, dependencies).
+
+## Prisma commands
+
+- Migrate and apply: npx prisma migrate dev

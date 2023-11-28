@@ -16,10 +16,73 @@ datasource db {
 }
 
 model User {
-  id            Int     @id @default(autoincrement())
-  google_id_sub String  @unique
-  email         String  @unique
-  firstName     String
-  lastName      String?
-  picture       String?
+  id              Int       @id @default(autoincrement())
+  google_id_sub   String    @unique
+  email           String    @unique
+  firstName       String
+  lastName        String?
+  picture         String?
+  createdTickets  Ticket[]  @relation(name: "CreatedTickets")
+  assignedTickets Ticket[]  @relation(name: "AssignedTickets")
+  createdProjects Project[] @relation(name: "CreatedProjects")
+  otherProjects   Project[] @relation(name: "OtherProjects")
+  comments        Comment[]
+  createdAt       DateTime  @default(now())
+}
+
+model Project {
+  id           Int      @id @default(autoincrement())
+  name         String
+  description  String?
+  owner        User     @relation("CreatedProjects", fields: [ownerId], references: [id])
+  ownerId      Int
+  contributors User[]   @relation("OtherProjects")
+  tickets      Ticket[]
+  createdAt    DateTime @default(now())
+}
+
+model Ticket {
+  id          Int             @id @default(autoincrement())
+  title       String
+  description String?
+  author      User            @relation(name: "CreatedTickets", fields: [authorId], references: [id])
+  authorId    Int
+  asignee     User?           @relation(name: "AssignedTickets", fields: [asigneeId], references: [id])
+  asigneeId   Int?
+  type        TicketType?
+  priority    TicketPriority?
+  status      TicketStatus    @default(OPEN)
+  createdAt   DateTime        @default(now())
+  project     Project         @relation(fields: [projectId], references: [id])
+  projectId   Int
+  comments    Comment[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+  ticket    Ticket   @relation(fields: [ticketId], references: [id])
+  ticketId  Int
+  message   String
+  createdAt DateTime @default(now())
+}
+
+enum TicketType {
+  BUG
+  TASK
+}
+
+enum TicketPriority {
+  URGENT
+  HIGH
+  NORMAL
+  LOW
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  TO_BE_TESTED
+  CLOSED
 }
