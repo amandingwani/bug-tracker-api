@@ -5,7 +5,7 @@ import { CLIENT_URL } from './config/env'
 import healthRoutes from './routes/health';
 import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
-import middleware from './middleware';
+import { logging, notFoundHandler } from './middleware';
 
 const app = express();
 
@@ -16,12 +16,12 @@ app.use(cors({
 }));
 app.use(express.json());
 
-app.use(middleware.logging);
+app.use(logging);
 
 app.use('/health', healthRoutes);
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 
-app.use(middleware.notFoundHandler);
+app.use(notFoundHandler);
 
 export default app;
