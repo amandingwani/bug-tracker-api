@@ -31,14 +31,15 @@ model User {
 }
 
 model Project {
-  id           Int      @id @default(autoincrement())
+  id           Int           @id @default(autoincrement())
   name         String
   description  String?
-  owner        User     @relation("CreatedProjects", fields: [ownerId], references: [id])
+  owner        User          @relation("CreatedProjects", fields: [ownerId], references: [id])
   ownerId      Int
-  contributors User[]   @relation("OtherProjects")
+  status       ProjectStatus @default(OPEN)
+  contributors User[]        @relation("OtherProjects")
   tickets      Ticket[]
-  createdAt    DateTime @default(now())
+  createdAt    DateTime      @default(now())
 }
 
 model Ticket {
@@ -66,6 +67,16 @@ model Comment {
   ticketId  Int
   message   String
   createdAt DateTime @default(now())
+}
+
+enum ProjectStatus {
+  OPEN // The project is in the planning or early stages.
+  IN_PROGRESS // Work is actively being done on the project.
+  ON_HOLD // The project is temporarily paused or delayed.
+  COMPLETED // The project has been finished successfully.
+  CANCELED // The project has been abandoned or canceled.
+  TESTING // The project is in the testing phase.
+  DEPLOYED // The project has been deployed to production.
 }
 
 enum TicketType {
