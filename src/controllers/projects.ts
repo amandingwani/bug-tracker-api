@@ -10,8 +10,34 @@ export const getProjects = async (req: Request, res: Response) => {
 				id: res.locals.userData.id
 			},
 			select: {
-				createdProjects: true,
-				otherProjects: true
+				createdProjects: {
+					select: {
+						id: true,
+						name: true,
+						description: true,
+						owner: {
+							select: {
+								firstName: true,
+								lastName: true
+							}
+						},
+						status: true
+					}
+				},
+				otherProjects: {
+					select: {
+						id: true,
+						name: true,
+						description: true,
+						owner: {
+							select: {
+								firstName: true,
+								lastName: true
+							}
+						},
+						status: true
+					}
+				}
 			}
 		});
 		res.json(allProjects);
