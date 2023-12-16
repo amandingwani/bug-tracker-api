@@ -5,6 +5,7 @@ import { CLIENT_URL } from './config/env'
 import healthRoutes from './routes/health';
 import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
+import projectsRoutes from './routes/projects';
 import { logging, notFoundHandler } from './middleware';
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(logging);
 app.use('/health', healthRoutes);
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
+app.use('/projects', projectsRoutes);
 
 app.use(notFoundHandler);
 
