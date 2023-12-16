@@ -6,6 +6,7 @@ import healthRoutes from './routes/health';
 import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
 import projectsRoutes from './routes/projects';
+import ticketsRoutes from './routes/tickets';
 import { logging, notFoundHandler } from './middleware';
 
 const app = express();
@@ -23,6 +24,7 @@ app.use('/health', healthRoutes);
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/projects', projectsRoutes);
+app.use('/tickets', ticketsRoutes)
 
 app.use(notFoundHandler);
 
