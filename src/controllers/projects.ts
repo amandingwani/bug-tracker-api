@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import prisma from '../db';
 import { User, Project, Ticket } from '@prisma/client';
 
-// get all the projects associated with a user (owner or a contributor to a project)
+// get all the projects (along with its tickets) associated with a user (owner or a contributor to a project)
 export const getProjects = async (req: Request, res: Response) => {
 	try {
 		let allProjects = await prisma.user.findUnique({
@@ -14,28 +14,83 @@ export const getProjects = async (req: Request, res: Response) => {
 					select: {
 						id: true,
 						name: true,
-						description: true,
 						owner: {
 							select: {
 								firstName: true,
 								lastName: true
 							}
 						},
-						status: true
+						status: true,
+						tickets: {
+							select: {
+								id: true,
+								title: true,
+								authorId: true,
+								author: {
+									select: {
+										firstName: true,
+										lastName: true
+									}
+								},
+								asigneeId: true,
+								asignee: {
+									select: {
+										firstName: true,
+										lastName: true
+									}
+								},
+								type: true,
+								priority: true,
+								status: true,
+								createdAt: true,
+								projectId: true,
+								project: {
+									select: {
+										name: true
+									}
+								}
+							}
+						},
+						createdAt: true
 					}
 				},
 				otherProjects: {
 					select: {
 						id: true,
 						name: true,
-						description: true,
 						owner: {
 							select: {
 								firstName: true,
 								lastName: true
 							}
 						},
-						status: true
+						status: true,
+						tickets: {
+							select: {
+								id: true,
+								title: true,
+								authorId: true,
+								author: {
+									select: {
+										firstName: true,
+										lastName: true
+									}
+								},
+								asigneeId: true,
+								asignee: {
+									select: {
+										firstName: true,
+										lastName: true
+									}
+								},
+								type: true,
+								priority: true,
+								status: true,
+								createdAt: true,
+								projectId: true,
+							}
+						},
+						createdAt: true
 					}
 				}
 			}
