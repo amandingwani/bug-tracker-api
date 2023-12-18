@@ -88,6 +88,11 @@ export const getProjects = async (req: Request, res: Response) => {
 								status: true,
 								createdAt: true,
 								projectId: true,
+								project: {
+									select: {
+										name: true
+									}
+								}
 							}
 						},
 						createdAt: true
