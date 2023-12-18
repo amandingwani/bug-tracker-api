@@ -14,12 +14,14 @@ export const getProjects = async (req: Request, res: Response) => {
 					select: {
 						id: true,
 						name: true,
+						description: true,
 						owner: {
 							select: {
 								firstName: true,
 								lastName: true
 							}
 						},
+						ownerId: true,
 						status: true,
 						tickets: {
 							select: {
@@ -58,12 +60,14 @@ export const getProjects = async (req: Request, res: Response) => {
 					select: {
 						id: true,
 						name: true,
+						description: true,
 						owner: {
 							select: {
 								firstName: true,
 								lastName: true
 							}
 						},
+						ownerId: true,
 						status: true,
 						tickets: {
 							select: {
