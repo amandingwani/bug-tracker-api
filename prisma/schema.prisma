@@ -43,18 +43,18 @@ model Project {
 }
 
 model Ticket {
-  id          Int             @id @default(autoincrement())
+  id          Int            @id @default(autoincrement())
   title       String
   description String?
-  author      User            @relation(name: "CreatedTickets", fields: [authorId], references: [id])
+  author      User           @relation(name: "CreatedTickets", fields: [authorId], references: [id])
   authorId    Int
-  asignee     User?           @relation(name: "AssignedTickets", fields: [asigneeId], references: [id])
+  asignee     User?          @relation(name: "AssignedTickets", fields: [asigneeId], references: [id])
   asigneeId   Int?
-  type        TicketType?
-  priority    TicketPriority?
-  status      TicketStatus    @default(OPEN)
-  createdAt   DateTime        @default(now())
-  project     Project         @relation(fields: [projectId], references: [id])
+  type        TicketType     @default(BUG)
+  priority    TicketPriority @default(NORMAL)
+  status      TicketStatus   @default(OPEN)
+  createdAt   DateTime       @default(now())
+  project     Project        @relation(fields: [projectId], references: [id])
   projectId   Int
   comments    Comment[]
 }

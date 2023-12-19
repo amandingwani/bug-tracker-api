@@ -27,6 +27,7 @@ export const getProjects = async (req: Request, res: Response) => {
 							select: {
 								id: true,
 								title: true,
+								description: true,
 								authorId: true,
 								author: {
 									select: {
@@ -73,6 +74,7 @@ export const getProjects = async (req: Request, res: Response) => {
 							select: {
 								id: true,
 								title: true,
+								description: true,
 								authorId: true,
 								author: {
 									select: {
