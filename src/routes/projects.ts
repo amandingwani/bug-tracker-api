@@ -1,5 +1,5 @@
 import express from 'express';
-import { getProjects } from '../controllers/projects';
+import { getProjects, createProject } from '../controllers/projects';
 import { authChecker } from '../middleware';
 
 const router = express.Router();
@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', authChecker, getProjects);
 
 // create a new project
-// router.post('/', authChecker, createProject);
+router.post('/', authChecker, createProject);
 
 // router.put('/:id', authChecker, editProject);
 // router.delete('/:id', authChecker, deleteProject);

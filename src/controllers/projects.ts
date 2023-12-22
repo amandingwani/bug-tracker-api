@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import prisma from '../db';
-import { User, Project, Ticket } from '@prisma/client';
+import { ProjectCreateInput } from '../utils/formValidator';
 
 // get all the projects (along with its tickets) associated with a user (owner or a contributor to a project)
 export const getProjects = async (req: Request, res: Response) => {
@@ -114,23 +114,31 @@ export const getProjects = async (req: Request, res: Response) => {
 	}
 }
 
-// // create a new project
-// export const createProject = async (req: Request, res: Response) => {
-// 	try {
-// 		// form sanitizer
-// 		let allProjects = await prisma.user.findUnique({
-// 			where: {
-// 				id: res.locals.userData.id
-// 			},
-// 			select: {
-// 				createdProjects: true,
-// 				otherProjects: true
-// 			}
-// 		});
-// 		res.json(allProjects);
+// create a new project
+export const createProject = async (req: Request, res: Response) => {
+	try {
+		// form sanitizer
+		const parsedData = ProjectCreateInput.parse(req.body);
 
-// 	} catch (error) {
-// 		res.json({ error: error });
-// 		console.log(error);
-// 	}
-// }
+		const project = await prisma.project.create({
+			data: {
+				name: parsedData.name,
+				description: parsedData.description,
+				status: parsedData.status,
+				ownerId: res.locals.userData.id
+			},
+			include: {
+				owner: {
+					select: {
+						firstName: true,
+						lastName: true
+					}
+				}
+			}
+		});
+		res.json(project);
+
+	} catch (error: unknown) {
+		res.json({ error: error });
+	}
+}
