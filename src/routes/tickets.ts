@@ -1,5 +1,5 @@
 import express from 'express';
-import { getTicket, getTicketsForUser, getTicketsForProject } from '../controllers/tickets';
+import { getTicket, getTicketsForUser, getTicketsForProject, createTicket } from '../controllers/tickets';
 import { authChecker } from '../middleware';
 
 const router = express.Router();
@@ -15,7 +15,8 @@ router.get('/project/:projectId', authChecker, getTicketsForProject);
 // !! Add middleware to check if user has access to that ticket
 router.get('/:ticketId', authChecker, getTicket);
 
-
+// create a new ticket
+router.post('/', authChecker, createTicket);
 
 // create a new project
 // router.post('/', authChecker, createProject);

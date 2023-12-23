@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import prisma from '../db';
-import { User, Project, Ticket } from '@prisma/client';
+import { TicketCreateInputSchema } from '../utils/formValidator';
 
 // get a ticket
 export const getTicket = async (req: Request, res: Response) => {
@@ -99,23 +99,45 @@ export const getTicketsForProject = async (req: Request, res: Response) => {
 	}
 }
 
-// // create a new project
-// export const createProject = async (req: Request, res: Response) => {
-// 	try {
-// 		// form sanitizer
-// 		let allProjects = await prisma.user.findUnique({
-// 			where: {
-// 				id: res.locals.userData.id
-// 			},
-// 			select: {
-// 				createdProjects: true,
-// 				otherProjects: true
-// 			}
-// 		});
-// 		res.json(allProjects);
+// create a new ticket
+export const createTicket = async (req: Request, res: Response) => {
+	try {
+		// form sanitizer
+		const parsedData = TicketCreateInputSchema.parse(req.body);
 
-// 	} catch (error) {
-// 		res.json({ error: error });
-// 		console.log(error);
-// 	}
-// }
+		const ticket = await prisma.ticket.create({
+			data: {
+				title: parsedData.title,
+				description: parsedData.description,
+				authorId: res.locals.userData.id,
+				type: parsedData.type,
+				priority: parsedData.priority,
+				status: parsedData.status,
+				projectId: parsedData.projectId
+			},
+			include: {
+				author: {
+					select: {
+						firstName: true,
+						lastName: true
+					}
+				},
+				asignee: {
+					select: {
+						firstName: true,
+						lastName: true
+					}
+				},
+				project: {
+					select: {
+						name: true
+					}
+				}
+			}
+		});
+		res.json(ticket);
+
+	} catch (error: unknown) {
+		res.json({ error: error });
+	}
+}
