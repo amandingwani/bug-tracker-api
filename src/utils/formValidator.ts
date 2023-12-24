@@ -45,3 +45,7 @@ export const TicketCreateInputSchema = z.object({
     status: ticketStatusSchema,
     projectId: z.number()
 })
+
+export const TicketUpdateSchema = TicketCreateInputSchema.extend({
+    id: z.number()
+})

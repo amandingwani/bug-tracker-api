@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import prisma from '../db';
-import { TicketCreateInputSchema } from '../utils/formValidator';
+import { TicketCreateInputSchema, TicketUpdateSchema } from '../utils/formValidator';
 
 // get a ticket
 export const getTicket = async (req: Request, res: Response) => {
@@ -136,6 +136,48 @@ export const createTicket = async (req: Request, res: Response) => {
 			}
 		});
 		res.json(ticket);
+
+	} catch (error: unknown) {
+		res.json({ error: error });
+	}
+}
+
+// update a ticket
+// !! only author can update
+export const updateTicket = async (req: Request, res: Response) => {
+	try {
+		// form sanitizer
+		const parsedData = TicketUpdateSchema.parse(req.body);
+
+		const existingTicket = await prisma.ticket.findUnique({
+			where: {
+				id: parsedData.id
+			},
+			select: {
+				authorId: true
+			}
+		})
+
+		if (existingTicket && existingTicket.authorId === res.locals.userData.id) {
+			const ticket = await prisma.ticket.update({
+				where: {
+					id: parsedData.id
+				},
+				data: {
+					title: parsedData.title,
+					description: parsedData.description,
+					type: parsedData.type,
+					priority: parsedData.priority,
+					status: parsedData.status,
+					projectId: parsedData.projectId
+				},
+			});
+			res.json(ticket);
+		}
+		else {
+			res.json({ error: "Unauthorized" })
+		}
+
 
 	} catch (error: unknown) {
 		res.json({ error: error });

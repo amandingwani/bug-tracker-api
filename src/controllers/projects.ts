@@ -144,7 +144,7 @@ export const createProject = async (req: Request, res: Response) => {
 	}
 }
 
-// update a new project
+// update a project
 // !! only owner can update a project
 export const updateProject = async (req: Request, res: Response) => {
 	try {

@@ -1,5 +1,5 @@
 import express from 'express';
-import { getTicket, getTicketsForUser, getTicketsForProject, createTicket } from '../controllers/tickets';
+import { getTicket, getTicketsForUser, getTicketsForProject, createTicket, updateTicket } from '../controllers/tickets';
 import { authChecker } from '../middleware';
 
 const router = express.Router();
@@ -18,10 +18,8 @@ router.get('/:ticketId', authChecker, getTicket);
 // create a new ticket
 router.post('/', authChecker, createTicket);
 
-// create a new project
-// router.post('/', authChecker, createProject);
+router.put('/', authChecker, updateTicket);
 
-// router.put('/:id', authChecker, editProject);
 // router.delete('/:id', authChecker, deleteProject);
 
 export default router;
