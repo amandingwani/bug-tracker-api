@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import prisma from '../db';
-import { ProjectCreateInput } from '../utils/formValidator';
+import { ProjectCreateInput, ProjectUpdateSchema } from '../utils/formValidator';
 
 // get all the projects (along with its tickets) associated with a user (owner or a contributor to a project)
 export const getProjects = async (req: Request, res: Response) => {
@@ -138,6 +138,45 @@ export const createProject = async (req: Request, res: Response) => {
 			}
 		});
 		res.json(project);
+
+	} catch (error: unknown) {
+		res.json({ error: error });
+	}
+}
+
+// update a new project
+// !! only owner can update a project
+export const updateProject = async (req: Request, res: Response) => {
+	try {
+		// form sanitizer
+		const parsedData = ProjectUpdateSchema.parse(req.body);
+
+		const existingProject = await prisma.project.findUnique({
+			where: {
+				id: parsedData.id
+			},
+			select: {
+				ownerId: true
+			}
+		})
+
+		if (existingProject && existingProject.ownerId === res.locals.userData.id) {
+			const project = await prisma.project.update({
+				where: {
+					id: parsedData.id
+				},
+				data: {
+					name: parsedData.name,
+					description: parsedData.description,
+					status: parsedData.status,
+				},
+			});
+			res.json(project);
+		}
+		else {
+			res.json({ error: "Unauthorized" })
+		}
+
 
 	} catch (error: unknown) {
 		res.json({ error: error });

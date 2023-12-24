@@ -17,6 +17,10 @@ export const ProjectCreateInput = z.object({
     ])
 })
 
+export const ProjectUpdateSchema = ProjectCreateInput.extend({
+    id: z.number()
+})
+
 export const ticketTypeSchema = z.union([z.literal("BUG"), z.literal("TASK")])
 
 export const ticketPrioritySchema = z.union([
