@@ -133,7 +133,8 @@ export const createProject = async (req: Request, res: Response) => {
 						firstName: true,
 						lastName: true
 					}
-				}
+				},
+				tickets: true
 			}
 		});
 		res.json(project);
