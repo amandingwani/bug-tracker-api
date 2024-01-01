@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import prisma from '../db';
-import { TicketCreateInputSchema, TicketUpdateSchema } from '../utils/formValidator';
+import { TicketCreateInputSchema, TicketUpdateSchema, TicketDeleteSchema } from '../utils/formValidator';
 
 // get a ticket
 export const getTicket = async (req: Request, res: Response) => {
@@ -143,43 +143,46 @@ export const createTicket = async (req: Request, res: Response) => {
 }
 
 // update a ticket
-// !! only author can update
 export const updateTicket = async (req: Request, res: Response) => {
 	try {
-		// form sanitizer
-		const parsedData = TicketUpdateSchema.parse(req.body);
-
-		const existingTicket = await prisma.ticket.findUnique({
+		const ticket = await prisma.ticket.update({
 			where: {
-				id: parsedData.id
+				id: res.locals.parsedData.id
 			},
-			select: {
-				authorId: true
+			data: {
+				title: res.locals.parsedData.title,
+				description: res.locals.parsedData.description,
+				type: res.locals.parsedData.type,
+				priority: res.locals.parsedData.priority,
+				status: res.locals.parsedData.status,
+				projectId: res.locals.parsedData.projectId
+			},
+		});
+		res.json(ticket);
+	} catch (error: unknown) {
+		res.json({ error: error });
+	}
+}
+
+// delete a ticket
+// !! only author can delete
+export const deleteTicket = async (req: Request, res: Response) => {
+	try {
+		const deleteTicket = await prisma.ticket.delete({
+			where: {
+				id: res.locals.parsedData.id
 			}
 		})
 
-		if (existingTicket && existingTicket.authorId === res.locals.userData.id) {
-			const ticket = await prisma.ticket.update({
-				where: {
-					id: parsedData.id
-				},
-				data: {
-					title: parsedData.title,
-					description: parsedData.description,
-					type: parsedData.type,
-					priority: parsedData.priority,
-					status: parsedData.status,
-					projectId: parsedData.projectId
-				},
-			});
-			res.json(ticket);
-		}
-		else {
-			res.json({ error: "Unauthorized" })
-		}
+		res.json(deleteTicket);
+		// console.log('deleting...');
+		// res.json({
+		// 	error: {
+		// 		message: 'test'
+		// 	}
+		// })
 
-
-	} catch (error: unknown) {
-		res.json({ error: error });
+	} catch (error) {
+		res.status(500).json({ error: error });
 	}
 }

@@ -49,3 +49,7 @@ export const TicketCreateInputSchema = z.object({
 export const TicketUpdateSchema = TicketCreateInputSchema.extend({
     id: z.number()
 })
+
+export const TicketDeleteSchema = z.object({
+    id: z.number()
+})
