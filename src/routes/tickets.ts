@@ -1,5 +1,12 @@
 import express from 'express';
-import { getTicket, getTicketsForUser, getTicketsForProject, createTicket, updateTicket, deleteTicket } from '../controllers/tickets';
+import {
+  getTicket,
+  getTicketsForUser,
+  getTicketsForProject,
+  createTicket,
+  updateTicket,
+  deleteTicket,
+} from '../controllers/tickets';
 import { authChecker, sanitizeAndAuthorCheck } from '../middleware';
 
 const router = express.Router();

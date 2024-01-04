@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import { CLIENT_URL } from './config/env'
+import { CLIENT_URL } from './config/env';
 import healthRoutes from './routes/health';
 import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
@@ -12,10 +12,12 @@ import { logging, notFoundHandler } from './middleware';
 const app = express();
 
 app.use(cookieParser());
-app.use(cors({
+app.use(
+  cors({
     credentials: true,
-    origin: CLIENT_URL
-}));
+    origin: CLIENT_URL,
+  })
+);
 app.use(express.json());
 
 app.use(logging);
@@ -24,7 +26,7 @@ app.use('/health', healthRoutes);
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/projects', projectsRoutes);
-app.use('/tickets', ticketsRoutes)
+app.use('/tickets', ticketsRoutes);
 
 app.use(notFoundHandler);
 
