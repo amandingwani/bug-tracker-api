@@ -1,6 +1,6 @@
 import express from 'express';
-import { getProjects, createProject, updateProject } from '../controllers/projects';
-import { authChecker } from '../middleware';
+import { getProjects, createProject, updateProject, deleteProject } from '../controllers/projects';
+import { authChecker, sanitizeAndOwnerCheck } from '../middleware';
 
 const router = express.Router();
 
@@ -10,8 +10,10 @@ router.get('/', authChecker, getProjects);
 // create a new project
 router.post('/', authChecker, createProject);
 
-router.put('/', authChecker, updateProject);
+// update a project
+router.put('/', authChecker, sanitizeAndOwnerCheck, updateProject);
 
-// router.delete('/:id', authChecker, deleteProject);
+// delete a project
+router.delete('/', authChecker, sanitizeAndOwnerCheck, deleteProject);
 
 export default router;

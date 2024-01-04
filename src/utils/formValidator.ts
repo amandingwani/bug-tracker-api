@@ -53,3 +53,7 @@ export const TicketUpdateSchema = TicketCreateInputSchema.extend({
 export const TicketDeleteSchema = z.object({
   id: z.number(),
 });
+
+export const ProjectDeleteSchema = z.object({
+  id: z.number(),
+});
