@@ -165,7 +165,6 @@ export const updateTicket = async (req: Request, res: Response) => {
 }
 
 // delete a ticket
-// !! only author can delete
 export const deleteTicket = async (req: Request, res: Response) => {
 	try {
 		const deleteTicket = await prisma.ticket.delete({
@@ -175,13 +174,6 @@ export const deleteTicket = async (req: Request, res: Response) => {
 		})
 
 		res.json(deleteTicket);
-		// console.log('deleting...');
-		// res.json({
-		// 	error: {
-		// 		message: 'test'
-		// 	}
-		// })
-
 	} catch (error) {
 		res.status(500).json({ error: error });
 	}
