@@ -21,6 +21,7 @@ export const googleAuth = async (req: Request, res: Response) => {
 
           // if user already exists
           if (user) {
+            let newlyRegistered = false;
             // if user is unregistered, update the user
             if (!user.registered) {
               user = await prisma.user.update({
@@ -36,12 +37,13 @@ export const googleAuth = async (req: Request, res: Response) => {
                   createdAt: new Date()
                 },
               })
+              newlyRegistered = true;
             }
 
-            // else, just login
+            // login
             jwt.sign(user, JWT_SECRET, {}, (err, token) => {
               if (err) throw err;
-              res.cookie('token', token, { sameSite: 'none', secure: true }).status(200).json(user);
+              res.cookie('token', token, { sameSite: 'none', secure: true }).status(newlyRegistered ? 201 : 200).json(user);
             });
           }
           // else register first then login
