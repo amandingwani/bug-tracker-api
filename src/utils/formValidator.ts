@@ -57,3 +57,9 @@ export const TicketDeleteSchema = z.object({
 export const ProjectDeleteSchema = z.object({
   id: z.number(),
 });
+
+export const EmailSchema = z.object({
+  email: z.string()
+    .min(1, { message: "This field has to be filled." })
+    .email("This is not a valid email.")
+});

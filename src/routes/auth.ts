@@ -5,7 +5,9 @@ import { authChecker } from '../middleware';
 
 const router = express.Router();
 
+// handle google login
 router.post('/google', googleAuth);
+// handle logout
 router.post('/logout', authChecker, logout);
 
 export default router;
