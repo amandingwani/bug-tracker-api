@@ -17,7 +17,17 @@ export const ProjectCreateInput = z.object({
   ]),
 });
 
-export const ProjectUpdateSchema = ProjectCreateInput.extend({
+export const EmailSchema = z.object({
+  email: z.string()
+    .min(1, { message: "This field has to be filled." })
+    .email("This is not a valid email.")
+});
+
+export const ProjectUpdateSchema = ProjectCreateInput.partial().extend({
+  id: z.number(),
+});
+
+export const ProjectAddContributorSchema = EmailSchema.extend({
   id: z.number(),
 });
 
@@ -58,8 +68,3 @@ export const ProjectDeleteSchema = z.object({
   id: z.number(),
 });
 
-export const EmailSchema = z.object({
-  email: z.string()
-    .min(1, { message: "This field has to be filled." })
-    .email("This is not a valid email.")
-});
