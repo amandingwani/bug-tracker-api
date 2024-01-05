@@ -1,8 +1,7 @@
 import express from 'express';
 import { profile } from '../controllers/profile';
 import { addUserByEmail } from '../controllers/user';
-import { authChecker } from '../middleware';
-import { addUser as addUserMiddleware } from 'middleware/user';
+import { authChecker, addUser as addUserMiddleware } from '../middleware';
 
 const router = express.Router();
 

@@ -1,11 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
 import prisma from '../db';
 
-import { ProjectUpdateSchema, ProjectDeleteSchema } from '../utils/formValidator';
+import { ProjectUpdateSchema, ProjectDeleteSchema, ProjectAddContributorSchema } from '../utils/formValidator';
 
 export const sanitizeAndOwnerCheck = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		if (req.method === 'UPDATE') res.locals.parsedData = ProjectUpdateSchema.parse(req.body);
+		if (req.method === 'PUT') {
+			if (req.url === '/addContributor' || req.url === '/removeContributor') {
+				res.locals.parsedData = ProjectAddContributorSchema.parse(req.body);
+			}
+			else {
+				res.locals.parsedData = ProjectUpdateSchema.parse(req.body);
+			}
+		}
 		else if (req.method === 'DELETE') res.locals.parsedData = ProjectDeleteSchema.parse(req.body);
 
 		const existingProject = await prisma.project.findUnique({
