@@ -6,6 +6,7 @@ export const addUserByEmail = async (req: Request, res: Response) => {
     try {
         const user = await prisma.user.create({
             data: {
+                registered: false,
                 email: res.locals.parsedData.email,
                 firstName: res.locals.parsedData.email.split('@')[0],
             },
