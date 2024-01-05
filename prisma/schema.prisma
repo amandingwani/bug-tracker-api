@@ -17,7 +17,7 @@ datasource db {
 
 model User {
   id              Int       @id @default(autoincrement())
-  google_id_sub   String    @unique
+  google_id_sub   String?   @unique
   email           String    @unique
   firstName       String
   lastName        String?
