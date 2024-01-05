@@ -17,6 +17,7 @@ datasource db {
 
 model User {
   id              Int       @id @default(autoincrement())
+  registered      Boolean   @default(true)
   google_id_sub   String?   @unique
   email           String    @unique
   firstName       String
