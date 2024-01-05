@@ -23,6 +23,14 @@ export const getProjects = async (req: Request, res: Response) => {
             },
             ownerId: true,
             status: true,
+            contributors: {
+              select: {
+                firstName: true,
+                lastName: true,
+                email: true,
+                registered: true
+              }
+            },
             tickets: {
               select: {
                 id: true,
@@ -154,6 +162,62 @@ export const updateProject = async (req: Request, res: Response) => {
         description: res.locals.parsedData.description,
         status: res.locals.parsedData.status,
       },
+    });
+    res.json(project);
+  } catch (error: unknown) {
+    res.json({ error: error });
+  }
+};
+
+export const addContributor = async (req: Request, res: Response) => {
+  try {
+    const project = await prisma.project.update({
+      where: {
+        id: res.locals.parsedData.id,
+      },
+      data: {
+        contributors: {
+          connect: { email: res.locals.parsedData.email }
+        }
+      },
+      include: {
+        contributors: {
+          select: {
+            firstName: true,
+            lastName: true,
+            email: true,
+            registered: true
+          }
+        },
+      }
+    });
+    res.json(project);
+  } catch (error: unknown) {
+    res.json({ error: error });
+  }
+};
+
+export const removeContributor = async (req: Request, res: Response) => {
+  try {
+    const project = await prisma.project.update({
+      where: {
+        id: res.locals.parsedData.id,
+      },
+      data: {
+        contributors: {
+          disconnect: { email: res.locals.parsedData.email }
+        }
+      },
+      include: {
+        contributors: {
+          select: {
+            firstName: true,
+            lastName: true,
+            email: true,
+            registered: true
+          }
+        },
+      }
     });
     res.json(project);
   } catch (error: unknown) {
