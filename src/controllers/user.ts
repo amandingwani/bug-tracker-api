@@ -11,7 +11,7 @@ export const addUserByEmail = async (req: Request, res: Response) => {
                 firstName: res.locals.parsedData.email.split('@')[0],
             },
         });
-
+        res.json(user);
     }
     catch (error) {
         res.status(500).json({ error: error });
