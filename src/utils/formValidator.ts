@@ -49,11 +49,12 @@ export const ticketStatusSchema = z.union([
 
 export const TicketCreateInputSchema = z.object({
   title: z.string(),
-  description: z.string(),
+  description: z.string().optional(),
   type: ticketTypeSchema,
   priority: ticketPrioritySchema,
   status: ticketStatusSchema,
   projectId: z.number(),
+  assigneeId: z.number().optional()
 });
 
 export const TicketUpdateSchema = TicketCreateInputSchema.extend({
