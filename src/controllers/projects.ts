@@ -93,6 +93,23 @@ export const updateProject = async (req: Request, res: Response) => {
 
 export const addContributor = async (req: Request, res: Response) => {
   try {
+    // first check is user already exists, else create the user
+    const existingUser = await prisma.user.findUnique({
+      where: {
+        email: res.locals.parsedData.email,
+      }
+    });
+
+    if (!existingUser) {
+      const user = await prisma.user.create({
+        data: {
+          registered: false,
+          email: res.locals.parsedData.email,
+          firstName: res.locals.parsedData.email.split('@')[0],
+        },
+      });
+    }
+
     const project = await prisma.project.update({
       where: {
         id: res.locals.parsedData.id,

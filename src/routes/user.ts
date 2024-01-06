@@ -1,7 +1,7 @@
 import express from 'express';
 import { profile } from '../controllers/profile';
-import { addUserByEmail } from '../controllers/user';
-import { authChecker, addUser as addUserMiddleware } from '../middleware';
+// import { addUserByEmail } from '../controllers/user';
+import { authChecker } from '../middleware';
 
 const router = express.Router();
 
@@ -9,6 +9,6 @@ const router = express.Router();
 router.get('/profile', authChecker, profile);
 
 // handle adding unregistered google user by email
-router.post('/addByEmail', authChecker, addUserMiddleware, addUserByEmail);
+// router.post('/addByEmail', authChecker, addUserMiddleware, addUserByEmail);
 
 export default router;
