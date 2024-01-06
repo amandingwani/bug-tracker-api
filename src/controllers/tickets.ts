@@ -126,7 +126,7 @@ export const ticketFieldsSelector = {
 // create a new ticket
 export const createTicket = async (req: Request, res: Response) => {
   try {
-    const parsedData = res.locals.parsedData;
+    const parsedData = TicketCreateInputSchema.parse(req.body);
 
     const ticket = await prisma.ticket.create({
       data: {

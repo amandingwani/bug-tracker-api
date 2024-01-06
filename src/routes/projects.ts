@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', authChecker, getProjects);
 
 // create a new project
-router.post('/', authChecker, sanitizeAndOwnerCheck, createProject);
+router.post('/', authChecker, createProject);
 
 // update a project
 router.put('/', authChecker, sanitizeAndOwnerCheck, updateProject);

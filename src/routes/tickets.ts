@@ -20,7 +20,7 @@ const router = express.Router();
 // router.get('/:ticketId', authChecker, getTicket);
 
 // create a new ticket
-router.post('/', authChecker, sanitizeAndAuthorCheck, createTicket);
+router.post('/', authChecker, createTicket);
 
 // update a ticket
 router.put('/', authChecker, sanitizeAndAuthorCheck, updateTicket);

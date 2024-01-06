@@ -55,7 +55,7 @@ export const getProjects = async (req: Request, res: Response) => {
 export const createProject = async (req: Request, res: Response) => {
   try {
     // form sanitizer
-    const parsedData = res.locals.parsedData;
+    const parsedData = ProjectCreateInput.parse(req.body);
 
     const project = await prisma.project.create({
       data: {
