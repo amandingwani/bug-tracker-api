@@ -119,6 +119,7 @@ export const ticketFieldsSelector = {
     select: {
       id: true,
       name: true,
+      contributors: true,
     },
   },
 }
@@ -180,6 +181,7 @@ export const deleteTicket = async (req: Request, res: Response) => {
       where: {
         id: res.locals.parsedData.id,
       },
+      select: ticketFieldsSelector
     });
 
     res.json(deleteTicket);

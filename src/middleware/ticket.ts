@@ -21,10 +21,15 @@ export const sanitizeAndAuthorCheck = async (req: Request, res: Response, next: 
       },
     });
 
-    if (existingTicket && existingTicket.authorId === res.locals.userData.id) {
-      next();
+    if (existingTicket) {
+      if (existingTicket.authorId === res.locals.userData.id) {
+        next();
+      }
+      else {
+        res.status(405).json({ error: 'Not allowed' });
+      }
     } else {
-      res.status(405).json({ error: 'Not allowed' });
+      res.status(404).json({ error: 'Not found' });
     }
   } catch (error) {
     res.status(500).json({ error: error });
