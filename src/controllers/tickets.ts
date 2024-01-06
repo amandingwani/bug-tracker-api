@@ -109,6 +109,7 @@ export const ticketFieldsSelector = {
   type: true,
   status: true,
   priority: true,
+  createdAt: true,
   author: {
     select: contributorSelector,
   },
