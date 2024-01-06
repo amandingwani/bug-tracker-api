@@ -9,7 +9,11 @@ import {
 
 export const sanitizeAndAuthorCheck = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    if (req.method === 'UPDATE') res.locals.parsedData = TicketUpdateSchema.parse(req.body);
+    if (req.method === 'POST') {
+      res.locals.parsedData = TicketCreateInputSchema.parse(req.body);
+      next();
+    }
+    else if (req.method === 'PUT') res.locals.parsedData = TicketUpdateSchema.parse(req.body);
     else if (req.method === 'DELETE') res.locals.parsedData = TicketDeleteSchema.parse(req.body);
 
     const existingTicket = await prisma.ticket.findUnique({

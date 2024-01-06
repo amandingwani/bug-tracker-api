@@ -1,11 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
 import prisma from '../db';
 
-import { ProjectUpdateSchema, ProjectDeleteSchema, ProjectAddContributorSchema } from '../utils/formValidator';
+import { ProjectUpdateSchema, ProjectDeleteSchema, ProjectAddContributorSchema, ProjectCreateInput } from '../utils/formValidator';
 
 export const sanitizeAndOwnerCheck = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		if (req.method === 'PUT') {
+		if (req.method === 'POST') {
+			res.locals.parsedData = ProjectCreateInput.parse(req.body);
+			next();
+		}
+		else if (req.method === 'PUT') {
 			if (req.url === '/addContributor' || req.url === '/removeContributor') {
 				res.locals.parsedData = ProjectAddContributorSchema.parse(req.body);
 			}

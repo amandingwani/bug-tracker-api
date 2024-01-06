@@ -1,6 +1,32 @@
 import { Request, Response } from 'express';
 import prisma from '../db';
 import { ProjectCreateInput, ProjectUpdateSchema } from '../utils/formValidator';
+import { ticketFieldsSelector } from './tickets';
+
+export const contributorSelector = {
+  id: true,
+  firstName: true,
+  lastName: true,
+  email: true,
+  registered: true
+}
+
+const projectFieldSelector = {
+  id: true,
+  name: true,
+  description: true,
+  owner: {
+    select: contributorSelector,
+  },
+  status: true,
+  contributors: {
+    select: contributorSelector
+  },
+  tickets: {
+    select: ticketFieldsSelector
+  },
+  createdAt: true,
+}
 
 // get all the projects (along with its tickets) associated with a user (owner or a contributor to a project)
 export const getProjects = async (req: Request, res: Response) => {
@@ -11,107 +37,10 @@ export const getProjects = async (req: Request, res: Response) => {
       },
       select: {
         createdProjects: {
-          select: {
-            id: true,
-            name: true,
-            description: true,
-            owner: {
-              select: {
-                firstName: true,
-                lastName: true,
-              },
-            },
-            ownerId: true,
-            status: true,
-            contributors: {
-              select: {
-                id: true,
-                firstName: true,
-                lastName: true,
-                email: true,
-                registered: true
-              }
-            },
-            tickets: {
-              select: {
-                id: true,
-                title: true,
-                description: true,
-                authorId: true,
-                author: {
-                  select: {
-                    firstName: true,
-                    lastName: true,
-                  },
-                },
-                assigneeId: true,
-                assignee: {
-                  select: {
-                    firstName: true,
-                    lastName: true,
-                  },
-                },
-                type: true,
-                priority: true,
-                status: true,
-                createdAt: true,
-                projectId: true,
-                project: {
-                  select: {
-                    name: true,
-                  },
-                },
-              },
-            },
-            createdAt: true,
-          },
+          select: projectFieldSelector
         },
         otherProjects: {
-          select: {
-            id: true,
-            name: true,
-            description: true,
-            owner: {
-              select: {
-                firstName: true,
-                lastName: true,
-              },
-            },
-            ownerId: true,
-            status: true,
-            tickets: {
-              select: {
-                id: true,
-                title: true,
-                description: true,
-                authorId: true,
-                author: {
-                  select: {
-                    firstName: true,
-                    lastName: true,
-                  },
-                },
-                assigneeId: true,
-                assignee: {
-                  select: {
-                    firstName: true,
-                    lastName: true,
-                  },
-                },
-                type: true,
-                priority: true,
-                status: true,
-                createdAt: true,
-                projectId: true,
-                project: {
-                  select: {
-                    name: true,
-                  },
-                },
-              },
-            },
-            createdAt: true,
-          },
+          select: projectFieldSelector
         },
       },
     });
@@ -126,7 +55,7 @@ export const getProjects = async (req: Request, res: Response) => {
 export const createProject = async (req: Request, res: Response) => {
   try {
     // form sanitizer
-    const parsedData = ProjectCreateInput.parse(req.body);
+    const parsedData = res.locals.parsedData;
 
     const project = await prisma.project.create({
       data: {
@@ -135,15 +64,7 @@ export const createProject = async (req: Request, res: Response) => {
         status: parsedData.status,
         ownerId: res.locals.userData.id,
       },
-      include: {
-        owner: {
-          select: {
-            firstName: true,
-            lastName: true,
-          },
-        },
-        tickets: true,
-      },
+      select: projectFieldSelector
     });
     res.json(project);
   } catch (error: unknown) {
@@ -183,13 +104,7 @@ export const addContributor = async (req: Request, res: Response) => {
       },
       include: {
         contributors: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            email: true,
-            registered: true
-          }
+          select: contributorSelector
         },
       }
     });
@@ -212,13 +127,7 @@ export const removeContributor = async (req: Request, res: Response) => {
       },
       include: {
         contributors: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            email: true,
-            registered: true
-          }
+          select: contributorSelector
         },
       }
     });
@@ -242,9 +151,3 @@ export const deleteProject = async (req: Request, res: Response) => {
     res.status(500).json({ error: error });
   }
 };
-// console.log('deleting...');
-// res.json({
-// 	error: {
-// 		message: 'test'
-// 	}
-// })
