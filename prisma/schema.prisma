@@ -49,8 +49,8 @@ model Ticket {
   description String?
   author      User           @relation(name: "CreatedTickets", fields: [authorId], references: [id])
   authorId    Int
-  asignee     User?          @relation(name: "AssignedTickets", fields: [asigneeId], references: [id])
-  asigneeId   Int?
+  assignee    User?          @relation(name: "AssignedTickets", fields: [assigneeId], references: [id])
+  assigneeId  Int?
   type        TicketType     @default(BUG)
   priority    TicketPriority @default(NORMAL)
   status      TicketStatus   @default(OPEN)

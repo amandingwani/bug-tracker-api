@@ -24,7 +24,7 @@ export const getTicket = async (req: Request, res: Response) => {
   }
 };
 
-// get all the tickets associated with a user (author or an asignee to a ticket)
+// get all the tickets associated with a user (author or an assignee to a ticket)
 export const getTicketsForUser = async (req: Request, res: Response) => {
   try {
     let allTicketsForUser = await prisma.user.findUnique({
@@ -40,7 +40,7 @@ export const getTicketsForUser = async (req: Request, res: Response) => {
                 lastName: true,
               },
             },
-            asignee: {
+            assignee: {
               select: {
                 firstName: true,
                 lastName: true,
@@ -61,7 +61,7 @@ export const getTicketsForUser = async (req: Request, res: Response) => {
                 lastName: true,
               },
             },
-            asignee: {
+            assignee: {
               select: {
                 firstName: true,
                 lastName: true,
@@ -124,7 +124,7 @@ export const createTicket = async (req: Request, res: Response) => {
             lastName: true,
           },
         },
-        asignee: {
+        assignee: {
           select: {
             firstName: true,
             lastName: true,

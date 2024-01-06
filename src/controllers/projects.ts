@@ -25,6 +25,7 @@ export const getProjects = async (req: Request, res: Response) => {
             status: true,
             contributors: {
               select: {
+                id: true,
                 firstName: true,
                 lastName: true,
                 email: true,
@@ -43,8 +44,8 @@ export const getProjects = async (req: Request, res: Response) => {
                     lastName: true,
                   },
                 },
-                asigneeId: true,
-                asignee: {
+                assigneeId: true,
+                assignee: {
                   select: {
                     firstName: true,
                     lastName: true,
@@ -90,8 +91,8 @@ export const getProjects = async (req: Request, res: Response) => {
                     lastName: true,
                   },
                 },
-                asigneeId: true,
-                asignee: {
+                assigneeId: true,
+                assignee: {
                   select: {
                     firstName: true,
                     lastName: true,
@@ -183,6 +184,7 @@ export const addContributor = async (req: Request, res: Response) => {
       include: {
         contributors: {
           select: {
+            id: true,
             firstName: true,
             lastName: true,
             email: true,
@@ -211,6 +213,7 @@ export const removeContributor = async (req: Request, res: Response) => {
       include: {
         contributors: {
           select: {
+            id: true,
             firstName: true,
             lastName: true,
             email: true,
