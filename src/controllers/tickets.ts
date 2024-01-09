@@ -121,6 +121,7 @@ export const ticketFieldsSelector = {
       id: true,
       name: true,
       contributors: true,
+      owner: true,
     },
   },
 }
