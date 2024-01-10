@@ -27,6 +27,7 @@ export const ProjectUpdateSchema = ProjectCreateInput.partial().extend({
   id: z.number(),
 });
 
+// {id: projectId, email: emailOfContributor}
 export const ProjectAddContributorSchema = EmailSchema.extend({
   id: z.number(),
 });

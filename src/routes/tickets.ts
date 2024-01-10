@@ -4,7 +4,7 @@ import {
   updateTicket,
   deleteTicket,
 } from '../controllers/tickets';
-import { authChecker, sanitizeAndAuthorCheck } from '../middleware';
+import { authChecker, updateTicketMiddleware, deleteTicketMiddleware } from '../middleware';
 
 const router = express.Router();
 
@@ -23,9 +23,9 @@ const router = express.Router();
 router.post('/', authChecker, createTicket);
 
 // update a ticket
-router.put('/', authChecker, sanitizeAndAuthorCheck, updateTicket);
+router.put('/', authChecker, updateTicketMiddleware, updateTicket);
 
 // delete a ticket
-router.delete('/', authChecker, sanitizeAndAuthorCheck, deleteTicket);
+router.delete('/', authChecker, deleteTicketMiddleware, deleteTicket);
 
 export default router;

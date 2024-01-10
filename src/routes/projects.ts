@@ -1,6 +1,6 @@
 import express from 'express';
 import { getProjects, createProject, updateProject, deleteProject, addContributor, removeContributor } from '../controllers/projects';
-import { authChecker, sanitizeAndOwnerCheck } from '../middleware';
+import { authChecker, sanitizeAndOwnerCheck, removeContributorMiddleware } from '../middleware';
 
 const router = express.Router();
 
@@ -20,6 +20,6 @@ router.delete('/', authChecker, sanitizeAndOwnerCheck, deleteProject);
 router.put('/addContributor', authChecker, sanitizeAndOwnerCheck, addContributor);
 
 // remove a contributor from a project
-router.put('/removeContributor', authChecker, sanitizeAndOwnerCheck, removeContributor);
+router.put('/removeContributor', authChecker, removeContributorMiddleware, removeContributor);
 
 export default router;
