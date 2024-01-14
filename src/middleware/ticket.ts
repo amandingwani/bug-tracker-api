@@ -45,12 +45,18 @@ export const updateTicketMiddleware = async (req: Request, res: Response, next: 
       },
       select: {
         authorId: true,
-        assigneeId: true
+        assigneeId: true,
+        project: {
+          select: {
+            ownerId: true
+          }
+        }
       },
     });
 
     if (existingTicket) {
-      if (existingTicket.authorId === res.locals.userData.id || existingTicket.assigneeId === res.locals.userData.id) {
+      // user can be author or assignee or project owner to edit
+      if (existingTicket.authorId === res.locals.userData.id || existingTicket.assigneeId === res.locals.userData.id || existingTicket.project.ownerId === res.locals.userData.id) {
         next();
       }
       else {
