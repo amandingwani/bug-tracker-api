@@ -55,7 +55,7 @@ export const TicketCreateInputSchema = z.object({
   priority: ticketPrioritySchema,
   status: ticketStatusSchema,
   projectId: z.number(),
-  assigneeId: z.number().optional()
+  assigneeId: z.number().nullable()
 });
 
 export const TicketUpdateSchema = TicketCreateInputSchema.extend({
