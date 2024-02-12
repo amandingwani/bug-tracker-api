@@ -17,11 +17,17 @@ export const deleteTicketMiddleware = async (req: Request, res: Response, next: 
       },
       select: {
         authorId: true,
+        project: {
+          select: {
+            ownerId: true
+          }
+        }
       },
     });
 
     if (existingTicket) {
-      if (existingTicket.authorId === res.locals.userData.id) {
+      // user can be author or project owner to delete
+      if (existingTicket.authorId === res.locals.userData.id || existingTicket.project.ownerId === res.locals.userData.id) {
         next();
       }
       else {
