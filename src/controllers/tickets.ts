@@ -147,6 +147,7 @@ export const createTicket = async (req: Request, res: Response) => {
     res.json(ticket);
   } catch (error: unknown) {
     res.json({ error: error });
+    console.log(error);
   }
 };
 
@@ -173,6 +174,7 @@ export const updateTicket = async (req: Request, res: Response) => {
     res.json(ticket);
   } catch (error: unknown) {
     res.json({ error: error });
+    console.log(error);
   }
 };
 
@@ -189,5 +191,6 @@ export const deleteTicket = async (req: Request, res: Response) => {
     res.json(deleteTicket);
   } catch (error) {
     res.status(500).json({ error: error });
+    console.log(error);
   }
 };

@@ -69,6 +69,7 @@ export const createProject = async (req: Request, res: Response) => {
     res.json(project);
   } catch (error: unknown) {
     res.json({ error: error });
+    console.log(error);
   }
 };
 
@@ -88,6 +89,7 @@ export const updateProject = async (req: Request, res: Response) => {
     res.json(project);
   } catch (error: unknown) {
     res.json({ error: error });
+    console.log(error);
   }
 };
 
@@ -128,6 +130,7 @@ export const addContributor = async (req: Request, res: Response) => {
     res.json(project);
   } catch (error: unknown) {
     res.json({ error: error });
+    console.log(error);
   }
 };
 
@@ -151,6 +154,7 @@ export const removeContributor = async (req: Request, res: Response) => {
     res.json(project);
   } catch (error: unknown) {
     res.json({ error: error });
+    console.log(error);
   }
 };
 
@@ -166,5 +170,6 @@ export const deleteProject = async (req: Request, res: Response) => {
     res.json(deleteProject);
   } catch (error) {
     res.status(500).json({ error: error });
+    console.log(error);
   }
 };
