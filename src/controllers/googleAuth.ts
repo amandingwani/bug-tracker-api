@@ -57,6 +57,7 @@ export const googleAuth = async (req: Request, res: Response) => {
                 picture: payload.picture,
               },
             });
+            console.log("User registered:");
             console.log({ user });
             jwt.sign(user, JWT_SECRET, {}, (err, token) => {
               if (err) throw err;
