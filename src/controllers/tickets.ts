@@ -124,7 +124,7 @@ export const ticketFieldsSelector = {
       owner: true,
     },
   },
-}
+};
 
 // create a new ticket
 export const createTicket = async (req: Request, res: Response) => {
@@ -140,9 +140,9 @@ export const createTicket = async (req: Request, res: Response) => {
         priority: parsedData.priority,
         status: parsedData.status,
         projectId: parsedData.projectId,
-        assigneeId: parsedData.assigneeId
+        assigneeId: parsedData.assigneeId,
       },
-      select: ticketFieldsSelector
+      select: ticketFieldsSelector,
     });
     res.json(ticket);
   } catch (error: unknown) {
@@ -167,9 +167,9 @@ export const updateTicket = async (req: Request, res: Response) => {
         priority: parsedData.priority,
         status: parsedData.status,
         projectId: parsedData.projectId,
-        assigneeId: parsedData.assigneeId
+        assigneeId: parsedData.assigneeId,
       },
-      select: ticketFieldsSelector
+      select: ticketFieldsSelector,
     });
     res.json(ticket);
   } catch (error: unknown) {
@@ -185,7 +185,7 @@ export const deleteTicket = async (req: Request, res: Response) => {
       where: {
         id: res.locals.parsedData.id,
       },
-      select: ticketFieldsSelector
+      select: ticketFieldsSelector,
     });
 
     res.json(deleteTicket);

@@ -19,18 +19,20 @@ export const deleteTicketMiddleware = async (req: Request, res: Response, next: 
         authorId: true,
         project: {
           select: {
-            ownerId: true
-          }
-        }
+            ownerId: true,
+          },
+        },
       },
     });
 
     if (existingTicket) {
       // user can be author or project owner to delete
-      if (existingTicket.authorId === res.locals.userData.id || existingTicket.project.ownerId === res.locals.userData.id) {
+      if (
+        existingTicket.authorId === res.locals.userData.id ||
+        existingTicket.project.ownerId === res.locals.userData.id
+      ) {
         next();
-      }
-      else {
+      } else {
         res.status(405).json({ error: 'Not allowed' });
       }
     } else {
@@ -54,18 +56,21 @@ export const updateTicketMiddleware = async (req: Request, res: Response, next: 
         assigneeId: true,
         project: {
           select: {
-            ownerId: true
-          }
-        }
+            ownerId: true,
+          },
+        },
       },
     });
 
     if (existingTicket) {
       // user can be author or assignee or project owner to edit
-      if (existingTicket.authorId === res.locals.userData.id || existingTicket.assigneeId === res.locals.userData.id || existingTicket.project.ownerId === res.locals.userData.id) {
+      if (
+        existingTicket.authorId === res.locals.userData.id ||
+        existingTicket.assigneeId === res.locals.userData.id ||
+        existingTicket.project.ownerId === res.locals.userData.id
+      ) {
         next();
-      }
-      else {
+      } else {
         res.status(405).json({ error: 'Not allowed' });
       }
     } else {

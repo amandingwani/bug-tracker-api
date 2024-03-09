@@ -1,5 +1,12 @@
 import express from 'express';
-import { getProjects, createProject, updateProject, deleteProject, addContributor, removeContributor } from '../controllers/projects';
+import {
+  getProjects,
+  createProject,
+  updateProject,
+  deleteProject,
+  addContributor,
+  removeContributor,
+} from '../controllers/projects';
 import { authChecker, sanitizeAndOwnerCheck, removeContributorMiddleware } from '../middleware';
 
 const router = express.Router();

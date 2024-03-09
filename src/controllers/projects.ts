@@ -8,8 +8,8 @@ export const contributorSelector = {
   firstName: true,
   lastName: true,
   email: true,
-  registered: true
-}
+  registered: true,
+};
 
 const projectFieldSelector = {
   id: true,
@@ -20,13 +20,13 @@ const projectFieldSelector = {
   },
   status: true,
   contributors: {
-    select: contributorSelector
+    select: contributorSelector,
   },
   tickets: {
-    select: ticketFieldsSelector
+    select: ticketFieldsSelector,
   },
   createdAt: true,
-}
+};
 
 // get all the projects (along with its tickets) associated with a user (owner or a contributor to a project)
 export const getProjects = async (req: Request, res: Response) => {
@@ -37,10 +37,10 @@ export const getProjects = async (req: Request, res: Response) => {
       },
       select: {
         createdProjects: {
-          select: projectFieldSelector
+          select: projectFieldSelector,
         },
         otherProjects: {
-          select: projectFieldSelector
+          select: projectFieldSelector,
         },
       },
     });
@@ -64,7 +64,7 @@ export const createProject = async (req: Request, res: Response) => {
         status: parsedData.status,
         ownerId: res.locals.userData.id,
       },
-      select: projectFieldSelector
+      select: projectFieldSelector,
     });
     res.json(project);
   } catch (error: unknown) {
@@ -99,7 +99,7 @@ export const addContributor = async (req: Request, res: Response) => {
     const existingUser = await prisma.user.findUnique({
       where: {
         email: res.locals.parsedData.email,
-      }
+      },
     });
 
     if (!existingUser) {
@@ -118,14 +118,14 @@ export const addContributor = async (req: Request, res: Response) => {
       },
       data: {
         contributors: {
-          connect: { email: res.locals.parsedData.email }
-        }
+          connect: { email: res.locals.parsedData.email },
+        },
       },
       include: {
         contributors: {
-          select: contributorSelector
+          select: contributorSelector,
         },
-      }
+      },
     });
     res.json(project);
   } catch (error: unknown) {
@@ -142,14 +142,14 @@ export const removeContributor = async (req: Request, res: Response) => {
       },
       data: {
         contributors: {
-          disconnect: { email: res.locals.parsedData.email }
-        }
+          disconnect: { email: res.locals.parsedData.email },
+        },
       },
       include: {
         contributors: {
-          select: contributorSelector
+          select: contributorSelector,
         },
-      }
+      },
     });
     res.json(project);
   } catch (error: unknown) {

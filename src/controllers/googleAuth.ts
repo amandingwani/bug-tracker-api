@@ -34,16 +34,19 @@ export const googleAuth = async (req: Request, res: Response) => {
                   firstName: payload.given_name,
                   lastName: payload.family_name,
                   picture: payload.picture,
-                  createdAt: new Date()
+                  createdAt: new Date(),
                 },
-              })
+              });
               newlyRegistered = true;
             }
 
             // login
             jwt.sign(user, JWT_SECRET, {}, (err, token) => {
               if (err) throw err;
-              res.cookie('token', token, { sameSite: 'none', secure: true }).status(newlyRegistered ? 201 : 200).json(user);
+              res
+                .cookie('token', token, { sameSite: 'none', secure: true })
+                .status(newlyRegistered ? 201 : 200)
+                .json(user);
             });
           }
           // else register first then login
@@ -57,7 +60,7 @@ export const googleAuth = async (req: Request, res: Response) => {
                 picture: payload.picture,
               },
             });
-            console.log("User registered:");
+            console.log('User registered:');
             console.log({ user });
             jwt.sign(user, JWT_SECRET, {}, (err, token) => {
               if (err) throw err;
@@ -68,6 +71,6 @@ export const googleAuth = async (req: Request, res: Response) => {
       }
     }
   } catch (error) {
-    res.status(500).json({ error: error })
+    res.status(500).json({ error: error });
   }
 };

@@ -18,9 +18,10 @@ export const ProjectCreateInput = z.object({
 });
 
 export const EmailSchema = z.object({
-  email: z.string()
-    .min(1, { message: "This field has to be filled." })
-    .email("This is not a valid email.")
+  email: z
+    .string()
+    .min(1, { message: 'This field has to be filled.' })
+    .email('This is not a valid email.'),
 });
 
 export const ProjectUpdateSchema = ProjectCreateInput.partial().extend({
@@ -55,7 +56,7 @@ export const TicketCreateInputSchema = z.object({
   priority: ticketPrioritySchema,
   status: ticketStatusSchema,
   projectId: z.number(),
-  assigneeId: z.number().nullable()
+  assigneeId: z.number().nullable(),
 });
 
 export const TicketUpdateSchema = TicketCreateInputSchema.extend({
@@ -69,4 +70,3 @@ export const TicketDeleteSchema = z.object({
 export const ProjectDeleteSchema = z.object({
   id: z.number(),
 });
-
