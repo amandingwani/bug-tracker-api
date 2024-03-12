@@ -46,8 +46,9 @@ export const getProjects = async (req: Request, res: Response) => {
     });
     res.json(allProjects);
   } catch (error) {
-    res.json({ error: error });
+    console.log(getProjects.name);
     console.log(error);
+    res.json({ error: error });
   }
 };
 
@@ -68,8 +69,9 @@ export const createProject = async (req: Request, res: Response) => {
     });
     res.json(project);
   } catch (error: unknown) {
-    res.json({ error: error });
+    console.log(createProject.name);
     console.log(error);
+    res.json({ error: error });
   }
 };
 
@@ -88,8 +90,9 @@ export const updateProject = async (req: Request, res: Response) => {
     });
     res.json(project);
   } catch (error: unknown) {
-    res.json({ error: error });
+    console.log(updateProject.name);
     console.log(error);
+    res.json({ error: error });
   }
 };
 
@@ -129,8 +132,9 @@ export const addContributor = async (req: Request, res: Response) => {
     });
     res.json(project);
   } catch (error: unknown) {
-    res.json({ error: error });
+    console.log(addContributor.name);
     console.log(error);
+    res.json({ error: error });
   }
 };
 
@@ -153,8 +157,9 @@ export const removeContributor = async (req: Request, res: Response) => {
     });
     res.json(project);
   } catch (error: unknown) {
-    res.json({ error: error });
+    console.log(removeContributor.name);
     console.log(error);
+    res.json({ error: error });
   }
 };
 
@@ -169,7 +174,8 @@ export const deleteProject = async (req: Request, res: Response) => {
 
     res.json(deleteProject);
   } catch (error) {
-    res.status(500).json({ error: error });
+    console.log(deleteProject.name);
     console.log(error);
+    res.status(500).json({ error: error });
   }
 };

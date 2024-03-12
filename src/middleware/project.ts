@@ -33,6 +33,8 @@ export const sanitizeAndOwnerCheck = async (req: Request, res: Response, next: N
       res.status(405).json({ error: 'Not allowed' });
     }
   } catch (error) {
+    console.log(sanitizeAndOwnerCheck.name);
+    console.log(error);
     res.status(500).json({ error: error });
   }
 };
@@ -69,6 +71,8 @@ export const removeContributorMiddleware = async (
       res.status(405).json({ error: 'Not allowed' });
     }
   } catch (error) {
+    console.log(removeContributorMiddleware.name);
+    console.log(error);
     res.status(500).json({ error: error });
   }
 };
