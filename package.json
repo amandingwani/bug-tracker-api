@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Back-end for the Bug Tracker application project.",
   "main": "dist/server.js",
+  "private": true,
   "type": "commonjs",
   "scripts": {
     "dev": "prettier . --check &&  nodemon",
@@ -10,18 +11,19 @@
     "build": "tsc",
     "serve": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prisma-studio": "npx prisma studio",
-    "prisma-migrate-dev": "npx prisma migrate dev",
-    "prisma-migrate-deploy": "npx prisma migrate deploy",
+    "prisma-studio": "prisma studio",
+    "prisma:pull": "git pull && prisma db pull",
+    "prisma:generate": "prisma generate",
+    "prisma-migrate-dev": "prisma migrate dev",
     "prettier-check": "prettier . --check",
-    "prettier": "prettier . --write"
+    "prettier": "prettier . --write",
+    "production": "prisma migrate deploy && npm run serve"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/amandingwani/bug-tracker-api.git"
   },
   "author": "Aman Dingwani",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/amandingwani/bug-tracker-api/issues"
   },
@@ -34,11 +36,11 @@
     "@types/node": "^20.8.2",
     "nodemon": "^3.0.1",
     "prettier": "3.1.1",
-    "prisma": "^5.7.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "prisma": "^5.7.1",
     "@prisma/client": "^5.7.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
