@@ -11,7 +11,6 @@ COPY --from=builder ./app/dist ./dist
 COPY --from=builder ./app/prisma ./prisma
 COPY --from=builder ./app/package*.json ./
 RUN npm install --omit=dev
-EXPOSE 3000
 # RUN chown -R node /usr/src/app
 # USER node
 # and also deploys any pending migrations

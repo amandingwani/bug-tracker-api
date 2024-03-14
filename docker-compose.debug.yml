@@ -7,8 +7,15 @@ services:
       context: .
       dockerfile: ./Dockerfile
     environment:
+      PORT: ${PORT}
+      CLIENT_URL: ${CLIENT_URL}
+      GOOGLE_OAUTH_CLIENT_ID: ${GOOGLE_OAUTH_CLIENT_ID}
+      GOOGLE_OAUTH_CLIENT_SECRET: ${GOOGLE_OAUTH_CLIENT_SECRET}
+      JWT_SECRET: ${JWT_SECRET}
+      DATABASE_URL: ${DATABASE_URL}
+      DIRECT_URL: ${DIRECT_URL}
       NODE_ENV: development
     ports:
-      - 3000:3000
+      - ${PORT}:${PORT}
       - 9229:9229
-    command: ['node', '--inspect=0.0.0.0:9229', 'dist/server.js']
+    command: [ 'node', '--inspect=0.0.0.0:9229', 'dist/server.js' ]
