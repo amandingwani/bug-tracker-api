@@ -18,7 +18,7 @@ export async function verifyIdToken(id_token: string) {
     //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
   });
   const payload = ticket.getPayload();
-  // console.log(payload);
+  // logger.info(payload);
   // const userid = payload?.sub;
   // // If request specified a G Suite domain:
   // // const domain = payload['hd'];

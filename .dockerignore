@@ -1,4 +1,5 @@
 **/.classpath
+**/*.log
 **/.env
 **/.git
 **/.gitignore

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import prisma from '../db';
 import { ProjectCreateInput, ProjectUpdateSchema } from '../utils/formValidator';
 import { ticketFieldsSelector } from './tickets';
+import logger from '../utils/logger';
 
 export const contributorSelector = {
   id: true,
@@ -46,9 +47,8 @@ export const getProjects = async (req: Request, res: Response) => {
     });
     res.json(allProjects);
   } catch (error) {
-    console.log(getProjects.name);
-    console.log(error);
     res.json({ error: error });
+    logger.error(getProjects.name, error);
   }
 };
 
@@ -69,9 +69,8 @@ export const createProject = async (req: Request, res: Response) => {
     });
     res.json(project);
   } catch (error: unknown) {
-    console.log(createProject.name);
-    console.log(error);
     res.json({ error: error });
+    logger.error(createProject.name, error);
   }
 };
 
@@ -90,9 +89,8 @@ export const updateProject = async (req: Request, res: Response) => {
     });
     res.json(project);
   } catch (error: unknown) {
-    console.log(updateProject.name);
-    console.log(error);
     res.json({ error: error });
+    logger.error(updateProject.name, error);
   }
 };
 
@@ -132,9 +130,8 @@ export const addContributor = async (req: Request, res: Response) => {
     });
     res.json(project);
   } catch (error: unknown) {
-    console.log(addContributor.name);
-    console.log(error);
     res.json({ error: error });
+    logger.error(addContributor.name, error);
   }
 };
 
@@ -157,9 +154,8 @@ export const removeContributor = async (req: Request, res: Response) => {
     });
     res.json(project);
   } catch (error: unknown) {
-    console.log(removeContributor.name);
-    console.log(error);
     res.json({ error: error });
+    logger.error(removeContributor.name, error);
   }
 };
 
@@ -174,8 +170,7 @@ export const deleteProject = async (req: Request, res: Response) => {
 
     res.json(deleteProject);
   } catch (error) {
-    console.log(deleteProject.name);
-    console.log(error);
     res.status(500).json({ error: error });
+    logger.error(deleteProject.name, error);
   }
 };

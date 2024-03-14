@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import logger from '../utils/logger';
 
 import { JWT_SECRET } from '../config/env';
 
@@ -16,9 +17,8 @@ const authChecker = (req: Request, res: Response, next: NextFunction) => {
       res.status(401).json('no token');
     }
   } catch (error) {
-    console.log(req.url);
-    console.log(error);
     res.status(401).json('Unauthorized');
+    logger.error(req.url, error);
   }
 };
 

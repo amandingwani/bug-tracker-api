@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import prisma from '../db';
+import logger from '../utils/logger';
 
 import {
   ProjectUpdateSchema,
@@ -33,9 +34,8 @@ export const sanitizeAndOwnerCheck = async (req: Request, res: Response, next: N
       res.status(405).json({ error: 'Not allowed' });
     }
   } catch (error) {
-    console.log(sanitizeAndOwnerCheck.name);
-    console.log(error);
     res.status(500).json({ error: error });
+    logger.error(sanitizeAndOwnerCheck.name, error);
   }
 };
 
@@ -71,8 +71,7 @@ export const removeContributorMiddleware = async (
       res.status(405).json({ error: 'Not allowed' });
     }
   } catch (error) {
-    console.log(removeContributorMiddleware.name);
-    console.log(error);
     res.status(500).json({ error: error });
+    logger.error(removeContributorMiddleware.name, error);
   }
 };

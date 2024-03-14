@@ -6,6 +6,100 @@ import {
   TicketDeleteSchema,
 } from '../utils/formValidator';
 import { contributorSelector } from './projects';
+import logger from '../utils/logger';
+
+export const ticketFieldsSelector = {
+  id: true,
+  title: true,
+  description: true,
+  type: true,
+  status: true,
+  priority: true,
+  createdAt: true,
+  author: {
+    select: contributorSelector,
+  },
+  assignee: {
+    select: contributorSelector,
+  },
+  project: {
+    select: {
+      id: true,
+      name: true,
+      contributors: true,
+      owner: true,
+    },
+  },
+};
+
+// create a new ticket
+export const createTicket = async (req: Request, res: Response) => {
+  try {
+    const parsedData = TicketCreateInputSchema.parse(req.body);
+
+    const ticket = await prisma.ticket.create({
+      data: {
+        title: parsedData.title,
+        description: parsedData.description,
+        authorId: res.locals.userData.id,
+        type: parsedData.type,
+        priority: parsedData.priority,
+        status: parsedData.status,
+        projectId: parsedData.projectId,
+        assigneeId: parsedData.assigneeId,
+      },
+      select: ticketFieldsSelector,
+    });
+    res.json(ticket);
+  } catch (error: unknown) {
+    res.json({ error: error });
+    logger.error(error);
+  }
+};
+
+// update a ticket
+export const updateTicket = async (req: Request, res: Response) => {
+  try {
+    const parsedData = res.locals.parsedData;
+
+    const ticket = await prisma.ticket.update({
+      where: {
+        id: parsedData.id,
+      },
+      data: {
+        title: parsedData.title,
+        description: parsedData.description,
+        type: parsedData.type,
+        priority: parsedData.priority,
+        status: parsedData.status,
+        projectId: parsedData.projectId,
+        assigneeId: parsedData.assigneeId,
+      },
+      select: ticketFieldsSelector,
+    });
+    res.json(ticket);
+  } catch (error: unknown) {
+    res.json({ error: error });
+    logger.error(error);
+  }
+};
+
+// delete a ticket
+export const deleteTicket = async (req: Request, res: Response) => {
+  try {
+    const deleteTicket = await prisma.ticket.delete({
+      where: {
+        id: res.locals.parsedData.id,
+      },
+      select: ticketFieldsSelector,
+    });
+
+    res.json(deleteTicket);
+  } catch (error) {
+    res.status(500).json({ error: error });
+    logger.error(error);
+  }
+};
 
 // // get a ticket
 // export const getTicket = async (req: Request, res: Response) => {
@@ -21,7 +115,7 @@ import { contributorSelector } from './projects';
 //     res.json(ticket);
 //   } catch (error) {
 //     res.json({ error: error });
-//     console.log(error);
+//     logger.error(error);
 //   }
 // };
 
@@ -80,7 +174,7 @@ import { contributorSelector } from './projects';
 //     res.json(allTicketsForUser);
 //   } catch (error) {
 //     res.json({ error: error });
-//     console.log(error);
+//     logger.error(error);
 //   }
 // };
 
@@ -98,99 +192,6 @@ import { contributorSelector } from './projects';
 //     res.json(allTicketsForProject);
 //   } catch (error) {
 //     res.json({ error: error });
-//     console.log(error);
+//     logger.error(error);
 //   }
 // };
-
-export const ticketFieldsSelector = {
-  id: true,
-  title: true,
-  description: true,
-  type: true,
-  status: true,
-  priority: true,
-  createdAt: true,
-  author: {
-    select: contributorSelector,
-  },
-  assignee: {
-    select: contributorSelector,
-  },
-  project: {
-    select: {
-      id: true,
-      name: true,
-      contributors: true,
-      owner: true,
-    },
-  },
-};
-
-// create a new ticket
-export const createTicket = async (req: Request, res: Response) => {
-  try {
-    const parsedData = TicketCreateInputSchema.parse(req.body);
-
-    const ticket = await prisma.ticket.create({
-      data: {
-        title: parsedData.title,
-        description: parsedData.description,
-        authorId: res.locals.userData.id,
-        type: parsedData.type,
-        priority: parsedData.priority,
-        status: parsedData.status,
-        projectId: parsedData.projectId,
-        assigneeId: parsedData.assigneeId,
-      },
-      select: ticketFieldsSelector,
-    });
-    res.json(ticket);
-  } catch (error: unknown) {
-    res.json({ error: error });
-    console.log(error);
-  }
-};
-
-// update a ticket
-export const updateTicket = async (req: Request, res: Response) => {
-  try {
-    const parsedData = res.locals.parsedData;
-
-    const ticket = await prisma.ticket.update({
-      where: {
-        id: parsedData.id,
-      },
-      data: {
-        title: parsedData.title,
-        description: parsedData.description,
-        type: parsedData.type,
-        priority: parsedData.priority,
-        status: parsedData.status,
-        projectId: parsedData.projectId,
-        assigneeId: parsedData.assigneeId,
-      },
-      select: ticketFieldsSelector,
-    });
-    res.json(ticket);
-  } catch (error: unknown) {
-    res.json({ error: error });
-    console.log(error);
-  }
-};
-
-// delete a ticket
-export const deleteTicket = async (req: Request, res: Response) => {
-  try {
-    const deleteTicket = await prisma.ticket.delete({
-      where: {
-        id: res.locals.parsedData.id,
-      },
-      select: ticketFieldsSelector,
-    });
-
-    res.json(deleteTicket);
-  } catch (error) {
-    res.status(500).json({ error: error });
-    console.log(error);
-  }
-};

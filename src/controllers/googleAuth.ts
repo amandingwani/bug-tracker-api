@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import prisma from '../db';
 import { getTokens, verifyIdToken } from '../services/google';
 import { JWT_SECRET } from '../config/env';
+import logger from '../utils/logger';
 
 // login or register
 export const googleAuth = async (req: Request, res: Response) => {
@@ -60,19 +61,17 @@ export const googleAuth = async (req: Request, res: Response) => {
                 picture: payload.picture,
               },
             });
-            console.log('User registered:');
-            console.log({ user });
             jwt.sign(user, JWT_SECRET, {}, (err, token) => {
               if (err) throw err;
               res.cookie('token', token, { sameSite: 'none', secure: true }).status(201).json(user);
             });
+            logger.info('User registered:', { user });
           }
         }
       }
     }
   } catch (error) {
-    console.log(googleAuth.name);
-    console.log({ error });
     res.status(500).json({ error: error });
+    logger.info(googleAuth.name, { error });
   }
 };
