@@ -18,4 +18,4 @@ services:
     ports:
       - ${PORT}:${PORT}
       - 9229:9229
-    command: [ 'node', '--inspect=0.0.0.0:9229', 'dist/server.js' ]
+    command: ['node', '--inspect=0.0.0.0:9229', 'dist/server.js']
