@@ -15,7 +15,7 @@ const logger = createLogger({
     // }),
     // - Write all logs with importance level of `info` or less to `combined.log`
     new transports.File({
-      filename: 'combined.log',
+      filename: 'logs/combined.log',
       maxsize: 10485760,
       maxFiles: 20,
       tailable: true,
