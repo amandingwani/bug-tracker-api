@@ -1,6 +1,6 @@
 import { createLogger, format, transports } from 'winston';
 import { WinstonTransport as AxiomTransport } from '@axiomhq/winston';
-import { NODE_ENV, AXIOM_TOKEN } from '../config/env';
+import { NODE_ENV, AXIOM_TOKEN, AXIOM_DATASET } from '../config/env';
 
 const logger = createLogger({
   level: 'info',
@@ -25,24 +25,15 @@ const logger = createLogger({
   ],
 });
 
-if (AXIOM_TOKEN) {
-  if (NODE_ENV === 'production') {
-    logger.add(
-      new AxiomTransport({
-        dataset: 'bug-tracker-api-production-logs',
-        token: AXIOM_TOKEN,
-      })
-    );
-  } else if (NODE_ENV === 'development') {
-    logger.add(
-      new AxiomTransport({
-        dataset: 'bug-tracker-api-staging-logs',
-        token: AXIOM_TOKEN,
-      })
-    );
-  }
+if (AXIOM_TOKEN && AXIOM_DATASET) {
+  logger.add(
+    new AxiomTransport({
+      dataset: AXIOM_DATASET,
+      token: AXIOM_TOKEN,
+    })
+  );
 } else {
-  console.log('Axiom Logging Error: Please set AXIOM_TOKEN env variable!');
+  console.log('Axiom Logging Error: Please set AXIOM_DATASET & AXIOM_TOKEN env variables!');
 }
 
 //

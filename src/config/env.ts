@@ -8,4 +8,5 @@ export const NODE_ENV = process.env.NODE_ENV || 'development';
 export const GOOGLE_OAUTH_CLIENT_ID = process.env.GOOGLE_OAUTH_CLIENT_ID;
 export const GOOGLE_OAUTH_CLIENT_SECRET = process.env.GOOGLE_OAUTH_CLIENT_SECRET;
 export const JWT_SECRET = process.env.JWT_SECRET || '!!PLEASE_GENERATE_A_NEW_JWT_SECRET!!';
+export const AXIOM_DATASET = process.env.AXIOM_DATASET;
 export const AXIOM_TOKEN = process.env.AXIOM_TOKEN;

@@ -12,6 +12,9 @@
 - CLIENT_URL
 - NODE_ENV ('development' or 'production')
 - JWT_SECRET
+- DATABASE_URL
+- AXIOM_DATASET
+- AXIOM_TOKEN
 
 ## Prisma commands
 
