@@ -8,7 +8,7 @@
     "outDir": "./dist",
     "esModuleInterop": true,
     "strict": true,
-    "noUncheckedIndexedAccess": true,                 /* Add 'undefined' to a type when accessed using an index. */
+    "noUncheckedIndexedAccess": true /* Add 'undefined' to a type when accessed using an index. */,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
