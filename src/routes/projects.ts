@@ -8,11 +8,12 @@ import {
   removeContributor,
 } from '../controllers/projects';
 import { authChecker, sanitizeAndOwnerCheck, removeContributorMiddleware } from '../middleware';
+import { infoLog } from '../middleware';
 
 const router = express.Router();
 
 // get all the projects associated with a user (owner or a contributor to a project)
-router.get('/', authChecker, getProjects);
+router.get('/', infoLog, authChecker, getProjects);
 
 // create a new project
 router.post('/', authChecker, createProject);
