@@ -45,7 +45,10 @@ export const googleAuth = async (req: Request, res: Response) => {
             jwt.sign(user, JWT_SECRET, {}, (err, token) => {
               if (err) throw err;
               res
-                .cookie('token', token, { sameSite: 'none', secure: true })
+                .cookie('token', token, {
+                  sameSite: 'none', secure: true, maxAge: 31536000000,
+                  expires: new Date(Date.now() + 31536000000),
+                })
                 .status(newlyRegistered ? 201 : 200)
                 .json(user);
             });
@@ -63,7 +66,15 @@ export const googleAuth = async (req: Request, res: Response) => {
             });
             jwt.sign(user, JWT_SECRET, {}, (err, token) => {
               if (err) throw err;
-              res.cookie('token', token, { sameSite: 'none', secure: true }).status(201).json(user);
+              res
+                .cookie('token', token, {
+                  sameSite: 'none',
+                  secure: true,
+                  maxAge: 31536000000,
+                  expires: new Date(Date.now() + 31536000000),
+                })
+                .status(201)
+                .json(user);
             });
             logger.info('User registered:', { user });
           }
