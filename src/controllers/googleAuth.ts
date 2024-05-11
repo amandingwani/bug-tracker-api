@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import prisma from '../db';
 import { getTokens, verifyIdToken } from '../services/google';
-import { JWT_SECRET } from '../config/env';
+import { AUTH_COOKIE_DOMAIN, JWT_SECRET } from '../config/env';
 import logger from '../utils/logger';
 
 // login or register
@@ -46,6 +46,7 @@ export const googleAuth = async (req: Request, res: Response) => {
               if (err) throw err;
               res
                 .cookie('token', token, {
+                  domain: AUTH_COOKIE_DOMAIN,
                   sameSite: 'none', secure: true, maxAge: 31536000000,
                   expires: new Date(Date.now() + 31536000000),
                 })
@@ -68,6 +69,7 @@ export const googleAuth = async (req: Request, res: Response) => {
               if (err) throw err;
               res
                 .cookie('token', token, {
+                  domain: AUTH_COOKIE_DOMAIN,
                   sameSite: 'none',
                   secure: true,
                   maxAge: 31536000000,

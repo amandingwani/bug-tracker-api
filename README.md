@@ -15,6 +15,7 @@
 - DATABASE_URL
 - AXIOM_DATASET
 - AXIOM_TOKEN
+- AUTH_COOKIE_DOMAIN
 
 ## Prisma commands
 
