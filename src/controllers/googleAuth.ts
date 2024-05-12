@@ -47,7 +47,9 @@ export const googleAuth = async (req: Request, res: Response) => {
               res
                 .cookie('token', token, {
                   domain: AUTH_COOKIE_DOMAIN,
-                  sameSite: 'none', secure: true, maxAge: 31536000000,
+                  sameSite: 'lax',
+                  secure: true,
+                  maxAge: 31536000000,
                   expires: new Date(Date.now() + 31536000000),
                 })
                 .status(newlyRegistered ? 201 : 200)
@@ -70,7 +72,7 @@ export const googleAuth = async (req: Request, res: Response) => {
               res
                 .cookie('token', token, {
                   domain: AUTH_COOKIE_DOMAIN,
-                  sameSite: 'none',
+                  sameSite: 'lax',
                   secure: true,
                   maxAge: 31536000000,
                   expires: new Date(Date.now() + 31536000000),
