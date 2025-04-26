@@ -3,6 +3,7 @@
 A RESTful API built with **Node.js**, **TypeScript**, **Prisma**, and **Docker**, designed to manage and track bugs effectively in software projects. This service supports Google OAuth authentication and follows best practices for development, deployment, and testing.
 
 <!-- Prettier badge -->
+
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 ---
@@ -45,3 +46,4 @@ DATABASE_URL=
 AXIOM_DATASET=
 AXIOM_TOKEN=
 AUTH_COOKIE_DOMAIN=
+```
