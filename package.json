@@ -6,7 +6,7 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
-    "dev": "npm run prettier &&  nodemon",
+    "dev": "npm run prettier && nodemon",
     "start": "ts-node ./src/server.ts",
     "build": "tsc",
     "serve": "node dist/server.js",
