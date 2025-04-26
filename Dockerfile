@@ -1,11 +1,11 @@
 # the builder stage installs dependencies and dev dependencies(needed for building)
 # and then builds the dist (for ts to js)
-FROM node:20.19.1-alpine3.21 AS builder
+FROM node:18.19.1-alpine3.19 AS builder
 WORKDIR /app
 COPY . .
 RUN npm install && npm run build
 
-FROM node:20.19.1-alpine3.21 AS final
+FROM node:18.19.1-alpine3.19 AS final
 WORKDIR /app
 COPY --from=builder ./app/dist ./dist
 COPY --from=builder ./app/prisma ./prisma
